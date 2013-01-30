@@ -1,7 +1,5 @@
 # -*- Mode: Makefile; tab-width: 8; indent-tabs-mode: t; -*-
 
-CLEANFILES = *~ .deps/* .*.swp .*.swo
-
 INCLUDES = $(GTK_CFLAGS)
 
 module_LTLIBRARIES = im-cocoa.la
