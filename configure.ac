@@ -13,7 +13,7 @@ AC_INIT([gtkimcocoa],
         [https://github.com/ashie/gtkimcocoa/issues],
         [gtkimcocoa])
 AC_CONFIG_HEADER([config.h])
-AM_INIT_AUTOMAKE([1.10])
+AM_INIT_AUTOMAKE([1.11])
 
 
 dnl
