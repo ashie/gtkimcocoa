@@ -14,6 +14,7 @@ AC_INIT([gtkimcocoa],
         [gtkimcocoa])
 AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE([1.11])
+AM_SILENT_RULES([yes])
 
 
 dnl
