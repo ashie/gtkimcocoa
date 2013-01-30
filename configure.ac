@@ -2,21 +2,20 @@
 # Process this file with autoconf to produce a configure script.
 
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(gtkimcontextcocoa.c)
-PACKAGE=imcocoa
+m4_define([gtkimcocoa_major_version], [0])
+m4_define([gtkimcocoa_minor_version], [0])
+m4_define([gtkimcocoa_micro_version], [0])
+m4_define([gtkimcocoa_version],
+    gtkimcocoa_major_version.gtkimcocoa_minor_version.gtkimcocoa_micro_version)
 
-dnl version number
-MAJOR_VERSION=0
-MINOR_VERSION=0
-MICRO_VERSION=0
-EXTRA_VERSION=
-VERSION=$MAJOR_VERSION.$MINOR_VERSION.$MICRO_VERSION$EXTRA_VERSION
+AC_INIT([gtkimcocoa],
+        [gtkimcocoa_version],
+        [https://github.com/ashie/gtkimcocoa/issues],
+        [gtkimcocoa])
 
 
 dnl 
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
-AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
-AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+AM_INIT_AUTOMAKE([1.10])
 
 AC_CONFIG_HEADER([config.h])
 
