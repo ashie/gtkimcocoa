@@ -1,6 +1,6 @@
 # -*- Mode: Makefile; tab-width: 8; indent-tabs-mode: t; -*-
 
-INCLUDES = $(GTK_CFLAGS)
+AM_CFLAGS = $(GTK_CFLAGS)
 
 module_LTLIBRARIES = im-cocoa.la
 moduledir = $(GTK3_IM_MODULEDIR)
