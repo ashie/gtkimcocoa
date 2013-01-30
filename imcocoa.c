@@ -20,7 +20,6 @@
 #include "config.h"
 #include <string.h>
 
-#include "gtk/gtkintl.h"
 #include "gtk/gtkimmodule.h"
 #include "gtkimcontextcocoa.h"
 
