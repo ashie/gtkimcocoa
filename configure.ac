@@ -50,7 +50,7 @@ GTK3_REQUIRED=3.0.0
 
 AC_SUBST(GTK3_REQUIRED)
 
-PKG_CHECK_MODULES(GTK, gtk+-3.0 >= GTK3_REQUIRED)
+PKG_CHECK_MODULES(GTK3, gtk+-3.0 >= GTK3_REQUIRED)
 
 gtk3_binary_version=`$PKG_CONFIG --variable=gtk_binary_version gtk+-3.0`
 gtk3_libdir=`$PKG_CONFIG --variable=libdir gtk+-3.0`
