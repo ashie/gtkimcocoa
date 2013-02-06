@@ -18,6 +18,7 @@
  */
 
 #include "gtkimcontextcocoa.h"
+#include <gdk/gdkquartz.h>
 
 typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
@@ -155,6 +156,13 @@ static void
 gtk_im_context_cocoa_set_client_window (GtkIMContext *context,
 					GdkWindow    *client_window)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  GdkQuartzWindow *quartz_window;
+  NSWindow *nswindow;
+
+  priv->client_window = client_window;
+
+  nswindow = gdk_quartz_window_get_nswindow(priv->client_window);
 }
 
 static gboolean
