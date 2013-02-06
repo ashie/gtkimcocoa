@@ -1,7 +1,9 @@
 # -*- Mode: Makefile; tab-width: 8; indent-tabs-mode: t; -*-
 SUBDIRS=test
 
-AM_CPPFLAGS = $(GTK3_CFLAGS) -x objective-c
+AM_CPPFLAGS = \
+	 -Wall -x objective-c \
+	$(GTK3_CFLAGS)
 
 module_LTLIBRARIES = im-cocoa.la
 moduledir = $(GTK3_IM_MODULEDIR)

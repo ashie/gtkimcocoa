@@ -1,4 +1,6 @@
-AM_CPPFLAGS = $(GTK3_CFLAGS) -x objective-c
+AM_CPPFLAGS = \
+	-Wall -x objective-c \
+	$(GTK3_CFLAGS)
 
 noinst_PROGRAMS = testbed
 
