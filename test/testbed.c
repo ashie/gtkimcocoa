@@ -10,20 +10,20 @@ static GtkWidget *
 create_tree_view (void)
 {
     GtkWidget *container;
-	GtkListStore *store =
+    GtkListStore *store =
         gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_BOOLEAN);
-	GtkTreeIter iter;
-	GtkCellRenderer *cell;
+    GtkTreeIter iter;
+    GtkCellRenderer *cell;
 
-	gtk_list_store_append(store, &iter);
-	gtk_list_store_set(store, &iter,
+    gtk_list_store_append(store, &iter);
+    gtk_list_store_set(store, &iter,
                        0, "Please edit me",
                        1, TRUE,
                        -1);
 
-	container = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
-	cell = gtk_cell_renderer_text_new();
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(container),
+    container = gtk_tree_view_new_with_model(GTK_TREE_MODEL(store));
+    cell = gtk_cell_renderer_text_new();
+    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(container),
                                                 0, "column1", cell,
                                                 "text", 0,
                                                 "editable", 1,
