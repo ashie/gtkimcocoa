@@ -199,6 +199,12 @@ gtk_im_context_cocoa_get_preedit_string (GtkIMContext   *context,
 					 PangoAttrList **attrs,
 					 gint           *cursor_pos)
 {
+  if (str)
+    *str = g_strdup("");
+  if (attrs)
+    *attrs = pango_attr_list_new();
+  if (cursor_pos)
+    cursor_pos = 0;
 }
 
 static void
