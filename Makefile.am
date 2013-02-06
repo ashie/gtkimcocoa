@@ -1,7 +1,6 @@
 # -*- Mode: Makefile; tab-width: 8; indent-tabs-mode: t; -*-
 
-AM_CFLAGS = $(GTK3_CFLAGS)
-
+AM_CFLAGS = $(GTK3_CFLAGS) -x objective-c
 module_LTLIBRARIES = im-cocoa.la
 moduledir = $(GTK3_IM_MODULEDIR)
 

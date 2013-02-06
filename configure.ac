@@ -20,6 +20,7 @@ AM_SILENT_RULES([yes])
 dnl
 dnl Checks for programs.
 dnl
+AC_LANG([Objective C])
 AC_PROG_CPP
 AC_PROG_CC
 AC_PROG_CXX
