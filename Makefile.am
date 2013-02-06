@@ -1,4 +1,5 @@
 # -*- Mode: Makefile; tab-width: 8; indent-tabs-mode: t; -*-
+SUBDIRS=test
 
 AM_CPPFLAGS = $(GTK3_CFLAGS) -x objective-c
 
