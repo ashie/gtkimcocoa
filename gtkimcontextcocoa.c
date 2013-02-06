@@ -19,9 +19,13 @@
 
 #include "gtkimcontextcocoa.h"
 
-struct _GtkIMContextCocoaPrivate
+typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
+struct _GtkIMContextCocoaPriv
 {
+  GdkWindow *client_window;
 };
+
+#define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GTK_TYPE_IM_CONTEXT_COCOA, GtkIMContextCocoaPriv))
 
 /* GObject class functions */
 static void gtk_im_context_cocoa_class_init (GtkIMContextCocoaClass *class);
@@ -100,11 +104,15 @@ gtk_im_context_cocoa_class_init (GtkIMContextCocoaClass *class)
   im_context_class->focus_out           = gtk_im_context_cocoa_focus_out;
   im_context_class->set_cursor_location = gtk_im_context_cocoa_set_cursor_location;
   im_context_class->set_use_preedit     = gtk_im_context_cocoa_set_use_preedit;
+
+  g_type_class_add_private(gobject_class, sizeof(GtkIMContextCocoaPriv));
 }
 
 static void
 gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context_cocoa);
+  priv->client_window = NULL;
 }
 
 static void
