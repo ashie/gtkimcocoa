@@ -197,6 +197,11 @@ static gboolean
 gtk_im_context_cocoa_filter_keypress (GtkIMContext *context,
 				      GdkEventKey  *event)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  if (event->type == GDK_KEY_PRESS) {
+    NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
+    [priv->view keyDown: nsevent];
+  }
   return FALSE;
 }
 
