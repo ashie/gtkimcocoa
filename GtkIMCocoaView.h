@@ -21,9 +21,13 @@
 #define __GTK_IM_COCOA_VIEW_H__
 
 #include <gdk/gdkquartz.h>
+#include "gtkimcontextcocoa.h"
 
 @interface GtkIMCocoaView : NSView <NSTextInputClient> {
+    GtkIMContextCocoa *gtkIMContextCocoa;
 }
+
+- (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context;
 
 @end
 

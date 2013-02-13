@@ -21,6 +21,10 @@
 
 @implementation GtkIMCocoaView
 
+- (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context {
+    gtkIMContextCocoa = context;
+}
+
 - (void) keyDown:(NSEvent *)theEvent {
     g_message("keyDown");
 

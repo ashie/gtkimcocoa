@@ -119,6 +119,7 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
 
   priv->client_window = NULL;
   priv->view = [[GtkIMCocoaView alloc] initWithFrame:rect];
+  [priv->view setGtkIMContextCocoa: context_cocoa];
 }
 
 static void
@@ -127,6 +128,7 @@ gtk_im_context_cocoa_dispose (GObject *obj)
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(obj);
 
   if (priv->view) {
+    [priv->view setGtkIMContextCocoa: nil];
     [priv->view release];
     priv->view = NULL;
   }
