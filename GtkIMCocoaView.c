@@ -86,7 +86,7 @@
     } else {
         str = [aString UTF8String];
     }
-      
+
     g_message("setMarkedText: %s", str);
 }
 
@@ -103,6 +103,8 @@
     } else {
         str = [aString UTF8String];
     }
+
+    g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
 
     g_message("insertText: \"%s\"", str);
 }
