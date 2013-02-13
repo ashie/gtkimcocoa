@@ -17,7 +17,12 @@
  *
  */
 
+#ifndef __GTK_COM_CONTEXT_COCOA_H__
+#define __GTK_COM_CONTEXT_COCOA_H__
+
 #include <gtk/gtk.h>
+
+G_BEGIN_DECLS
 
 extern GType gtk_type_im_context_cocoa;
 
@@ -45,3 +50,7 @@ struct _GtkIMContextCocoaClass
 
 void          gtk_im_context_cocoa_register_type (GTypeModule * type_module);
 GtkIMContext *gtk_im_context_cocoa_new           (void);
+
+G_END_DECLS
+
+#endif /* __GTK_COM_CONTEXT_COCOA_H__ */
