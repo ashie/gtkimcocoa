@@ -20,12 +20,14 @@
 #include "gtkimcontextcocoa.h"
 #include <gdk/gdkquartz.h>
 #include "GtkIMCocoaWindowDelegate.h"
+#include "GtkIMCocoaView.h"
 
 typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
 {
   GdkWindow *client_window;
   GtkIMCocoaWindowDelegate *window_delegate;
+  GtkIMCocoaView *view;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GTK_TYPE_IM_CONTEXT_COCOA, GtkIMContextCocoaPriv))
@@ -115,14 +117,20 @@ static void
 gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context_cocoa);
+  NSRect rect = NSMakeRect(0, 0, 0, 0);
+
   priv->client_window = NULL;
   priv->window_delegate = [[GtkIMCocoaWindowDelegate alloc] init];
+  priv->view = [[GtkIMCocoaView alloc] initWithFrame:rect];
 }
 
 static void
 gtk_im_context_cocoa_dispose (GObject *obj)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(obj);
+
+  [priv->view release];
+  priv->view = NULL;
 
   [priv->window_delegate release];
   priv->window_delegate = NULL;
