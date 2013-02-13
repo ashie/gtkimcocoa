@@ -13,5 +13,6 @@ im_cocoa_la_LDFLAGS = \
 im_cocoa_la_LIBADD = $(GTK3_LIBS)
 im_cocoa_la_SOURCES = \
 	gtkimcontextcocoa.c gtkimcontextcocoa.h \
+	GtkIMCocoaView.c GtkIMCocoaView.h \
 	GtkIMCocoaWindowDelegate.c GtkIMCocoaWindowDelegate.h \
 	imcocoa.c
