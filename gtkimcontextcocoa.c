@@ -19,14 +19,12 @@
 
 #include "gtkimcontextcocoa.h"
 #include <gdk/gdkquartz.h>
-#include "GtkIMCocoaWindowDelegate.h"
 #include "GtkIMCocoaView.h"
 
 typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
 {
   GdkWindow *client_window;
-  GtkIMCocoaWindowDelegate *window_delegate;
   GtkIMCocoaView *view;
 };
 
@@ -120,7 +118,6 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
   NSRect rect = NSMakeRect(0, 0, 0, 0);
 
   priv->client_window = NULL;
-  priv->window_delegate = [[GtkIMCocoaWindowDelegate alloc] init];
   priv->view = [[GtkIMCocoaView alloc] initWithFrame:rect];
 }
 
@@ -132,11 +129,6 @@ gtk_im_context_cocoa_dispose (GObject *obj)
   if (priv->view) {
     [priv->view release];
     priv->view = NULL;
-  }
-
-  if (priv->window_delegate) {
-    [priv->window_delegate release];
-    priv->window_delegate = NULL;
   }
 
   if (G_OBJECT_CLASS (parent_class)->dispose)
@@ -177,20 +169,8 @@ gtk_im_context_cocoa_set_client_window (GtkIMContext *context,
 					GdkWindow    *client_window)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
-  GdkQuartzWindow *quartz_window;
-  NSWindow *nswindow = NULL;
-
-  if (priv->client_window) {
-    nswindow = gdk_quartz_window_get_nswindow(priv->client_window);
-    [nswindow setDelegate:nil];
-  }
 
   priv->client_window = client_window;
-
-  if (priv->client_window) {
-    nswindow = gdk_quartz_window_get_nswindow(priv->client_window);
-    [nswindow setDelegate:priv->window_delegate];
-  }
 }
 
 static gboolean
