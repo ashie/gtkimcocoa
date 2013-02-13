@@ -8,7 +8,7 @@
     /*
      * FIXME:
      * Although the reference manual says "shouldn't call directly",
-     * I coundn't get preedit events without it.
+     * I can't get preedit events without it.
      * http://developer.apple.com/library/mac/documentation/cocoa/reference/NSTextInputContext_Class/Reference/Reference.html#//apple_ref/occ/instm/NSTextInputContext/activate
      */
     [[self inputContext] activate];
