@@ -2,6 +2,11 @@
 
 @implementation GtkIMCocoaView
 
+- (void) keyDown:(NSEvent *)theEvent {
+    g_message("keyDown");
+    [[self inputContext] handleEvent:theEvent];
+}
+
 - (NSUInteger)characterIndexForPoint:(NSPoint)aPoint {
     g_message("characterIndexForPoint");
     return 0;
