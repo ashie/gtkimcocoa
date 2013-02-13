@@ -72,7 +72,7 @@
         str = [aString UTF8String];
     }
 
-    g_message("insertText: %s\n", str);
+    g_message("insertText: \"%s\"\n", str);
 }
 
 
