@@ -55,7 +55,7 @@
         str = [aString UTF8String];
     }
       
-    g_message("setMarkedText: %s\n", str);
+    g_message("setMarkedText: %s", str);
 }
 
 - (void)doCommandBySelector:(SEL)aSelector {
@@ -72,7 +72,7 @@
         str = [aString UTF8String];
     }
 
-    g_message("insertText: \"%s\"\n", str);
+    g_message("insertText: \"%s\"", str);
 }
 
 
