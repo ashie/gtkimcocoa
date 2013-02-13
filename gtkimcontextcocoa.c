@@ -129,11 +129,15 @@ gtk_im_context_cocoa_dispose (GObject *obj)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(obj);
 
-  [priv->view release];
-  priv->view = NULL;
+  if (priv->view) {
+    [priv->view release];
+    priv->view = NULL;
+  }
 
-  [priv->window_delegate release];
-  priv->window_delegate = NULL;
+  if (priv->window_delegate) {
+    [priv->window_delegate release];
+    priv->window_delegate = NULL;
+  }
 
   if (G_OBJECT_CLASS (parent_class)->dispose)
     G_OBJECT_CLASS (parent_class)->dispose (obj);
