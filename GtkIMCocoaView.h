@@ -1,6 +1,6 @@
 #include <gdk/gdkquartz.h>
 
-@interface GdkIMCocoaView : NSView <NSTextInputClient> {
+@interface GtkIMCocoaView : NSView <NSTextInputClient> {
 }
 
 @end

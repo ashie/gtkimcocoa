@@ -1,6 +1,6 @@
 #include "GtkIMCocoaView.h"
 
-@implementation GdkIMCocoaView
+@implementation GtkIMCocoaView
 
 - (NSUInteger)characterIndexForPoint:(NSPoint)aPoint {
     g_message("characterIndexForPoint");
