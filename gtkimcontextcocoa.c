@@ -208,6 +208,9 @@ filter_keypress (GtkIMContext *context,
 static void
 reset (GtkIMContext *context)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+
+  [priv->view unmarkText];
 }
 
 static PangoAttrList *
