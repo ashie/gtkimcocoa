@@ -24,6 +24,7 @@
 - (id) init
 {
   [super init];
+  markedRange = NSMakeRange(NSNotFound, 0);
   selectedRange = NSMakeRange(NSNotFound, 0);
   activated = NO;
   return self;
@@ -104,12 +105,7 @@
 
 - (NSRange) markedRange
 {
-  const gchar *text = gtk_im_context_cocoa_get_preedit_string(gtkIMContextCocoa);
-
-  if (text && *text)
-    return NSMakeRange(0, g_utf8_strlen(text, -1));
-  else
-    return NSMakeRange(NSNotFound, 0);
+  return markedRange;
 }
 
 - (NSRange) selectedRange
@@ -135,6 +131,11 @@
   }
 
   selectedRange = newSelection;
+  if (str && *str)
+    markedRange = NSMakeRange(0, g_utf8_strlen(str, -1));
+  else
+    markedRange = NSMakeRange(NSNotFound, 0);
+
   gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str,
                                           selectedRange.location,
                                           selectedRange.length);
