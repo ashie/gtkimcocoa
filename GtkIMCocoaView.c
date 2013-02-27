@@ -32,9 +32,9 @@
     gtkIMContextCocoa = context;
 }
 
-- (void) keyDown: (NSEvent *)theEvent
+- (BOOL) filterKeyDown: (NSEvent *) keyDownEvent
 {
-    g_message("keyDown");
+    g_message("filterKeyDown");
 
     /*
      * FIXME:
@@ -44,7 +44,12 @@
      */
     [[self inputContext] activate];
 
-    [[self inputContext] handleEvent:theEvent];
+    return [[self inputContext] handleEvent:keyDownEvent];
+}
+
+- (void) keyDown: (NSEvent *)theEvent
+{
+    [self filterKeyDown:theEvent];
 }
 
 - (NSUInteger) characterIndexForPoint: (NSPoint)aPoint

@@ -191,7 +191,13 @@ filter_keypress (GtkIMContext *context,
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
   if (event->type == GDK_KEY_PRESS) {
     NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
-    [priv->view keyDown: nsevent];
+    gboolean preediting = (priv->preedit_string && *priv->preedit_string);
+    gboolean handled;
+
+    handled = [priv->view filterKeyDown: nsevent];
+    preediting = preediting || (priv->preedit_string && *priv->preedit_string);
+
+    return handled && preediting;
   }
   return FALSE;
 }

@@ -29,6 +29,7 @@
 }
 
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context;
+- (BOOL) filterKeyDown: (NSEvent *) keyDownEvent;
 
 @end
 
