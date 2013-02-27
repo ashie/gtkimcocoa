@@ -24,9 +24,9 @@
 #include "gtkimcontextcocoa.h"
 
 @interface GtkIMCocoaView : NSView <NSTextInputClient> {
-    GtkIMContextCocoa *gtkIMContextCocoa;
-    NSRange selectedRange;
-    BOOL activated;
+  GtkIMContextCocoa *gtkIMContextCocoa;
+  NSRange selectedRange;
+  BOOL activated;
 }
 
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context;
