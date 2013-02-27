@@ -50,6 +50,9 @@ struct _GtkIMContextCocoaClass
 
 void          gtk_im_context_cocoa_register_type (GTypeModule * type_module);
 GtkIMContext *gtk_im_context_cocoa_new           (void);
+void          gtk_im_context_cocoa_set_preedit_string
+                                                 (GtkIMContextCocoa *context,
+                                                  const gchar       *str);
 
 G_END_DECLS
 

@@ -98,6 +98,7 @@
 
     g_free(markedText);
     markedText = g_strdup(str);
+    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str);
 
     g_message("setMarkedText: %s", str);
 }

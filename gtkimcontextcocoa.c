@@ -26,6 +26,7 @@ struct _GtkIMContextCocoaPriv
 {
   GdkWindow *client_window;
   GtkIMCocoaView *view;
+  gchar *preedit_string;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GTK_TYPE_IM_CONTEXT_COCOA, GtkIMContextCocoaPriv))
@@ -120,12 +121,18 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
   priv->client_window = NULL;
   priv->view = [[GtkIMCocoaView alloc] initWithFrame:rect];
   [priv->view setGtkIMContextCocoa: context_cocoa];
+  priv->preedit_string = g_strdup("");
 }
 
 static void
 gtk_im_context_cocoa_dispose (GObject *obj)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(obj);
+
+  if (priv->preedit_string) {
+    g_free(priv->preedit_string);
+    priv->preedit_string = NULL;
+  }
 
   if (priv->view) {
     [priv->view setGtkIMContextCocoa: nil];
@@ -198,8 +205,10 @@ gtk_im_context_cocoa_get_preedit_string (GtkIMContext   *context,
 					 PangoAttrList **attrs,
 					 gint           *cursor_pos)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+
   if (str)
-    *str = g_strdup("");
+    *str = g_strdup(priv->preedit_string);
   if (attrs)
     *attrs = pango_attr_list_new();
   if (cursor_pos)
@@ -226,4 +235,18 @@ static void
 gtk_im_context_cocoa_set_use_preedit (GtkIMContext *context,
 				      gboolean      use_preedit)
 {
+}
+
+void
+gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
+                                         const gchar       *str)
+{
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+
+  g_return_if_fail(GTK_IS_IM_CONTEXT_COCOA(context));
+
+  g_free(priv->preedit_string);
+  priv->preedit_string = g_strdup(str ? str : "");
+
+  g_signal_emit_by_name(context, "preedit-changed");
 }
