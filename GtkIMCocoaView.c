@@ -21,16 +21,19 @@
 
 @implementation GtkIMCocoaView
 
-- (id) init {
+- (id) init
+{
     [super init];
     return self;
 }
 
-- (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context {
+- (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context
+{
     gtkIMContextCocoa = context;
 }
 
-- (void) keyDown:(NSEvent *)theEvent {
+- (void) keyDown: (NSEvent *)theEvent
+{
     g_message("keyDown");
 
     /*
@@ -44,27 +47,36 @@
     [[self inputContext] handleEvent:theEvent];
 }
 
-- (NSUInteger)characterIndexForPoint:(NSPoint)aPoint {
+- (NSUInteger) characterIndexForPoint: (NSPoint)aPoint
+{
     g_message("characterIndexForPoint");
     return 0;
 }
 
-- (NSRect)firstRectForCharacterRange:(NSRange)aRange actualRange:(NSRangePointer)actualRange {
+- (NSRect) firstRectForCharacterRange:
+    (NSRange)aRange
+    actualRange:(NSRangePointer)actualRange
+{
     g_message("firstRectForCharacterRange");
     return NSMakeRect(0, 0, 0, 0);
 }
 
-- (NSArray *)validAttributesForMarkedText {
+- (NSArray *) validAttributesForMarkedText
+{
     g_message("validAttributesForMarkedText");
     return NULL;
 }
 
-- (NSAttributedString *)attributedSubstringForProposedRange:(NSRange)aRange actualRange:(NSRangePointer)actualRange {
+- (NSAttributedString *) attributedSubstringForProposedRange:
+    (NSRange)aRange
+    actualRange:(NSRangePointer)actualRange
+{
     g_message("attributedSubstringForProposedRange");
     return NULL;
 }
 
-- (BOOL)hasMarkedText {
+- (BOOL) hasMarkedText
+{
     const gchar *text = gtk_im_context_cocoa_get_preedit_string(gtkIMContextCocoa);
     g_message("hasMarkedText");
     if (text && *text)
@@ -73,22 +85,28 @@
         return NO;
 }
 
-- (NSRange)markedRange {
+- (NSRange) markedRange
+{
     g_message("markedRange");
     return NSMakeRange(0, 0);
 }
 
-- (NSRange)selectedRange {
+- (NSRange) selectedRange
+{
     g_message("selectedRange");
     return NSMakeRange(0, 0);
 }
 
-- (void)unmarkText {
+- (void) unmarkText
+{
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "");
     g_message("unmarkText");
 }
 
-- (void)setMarkedText:(id)aString selectedRange:(NSRange)newSelection replacementRange:(NSRange)replacementRange {
+- (void) setMarkedText: (id)aString
+                        selectedRange:(NSRange)newSelection
+                        replacementRange:(NSRange)replacementRange
+{
     const char *str;
 
     if ([aString isKindOfClass:[NSAttributedString class]]) {
@@ -102,12 +120,14 @@
     g_message("setMarkedText: %s", str);
 }
 
-- (void)doCommandBySelector:(SEL)aSelector {
+- (void) doCommandBySelector: (SEL)aSelector
+{
     g_message("doCommandBySelector");
     [super doCommandBySelector:aSelector];
 }
 
-- (void)insertText:(id)aString replacementRange:(NSRange)replacementRange {
+- (void) insertText: (id) aString replacementRange: (NSRange)replacementRange
+{
     const char *str;
     
     if ([aString isKindOfClass:[NSAttributedString class]]) {
