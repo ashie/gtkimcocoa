@@ -25,7 +25,7 @@
 
 static const GtkIMContextInfo cocoa_info = {
   "cocoa",
-  "Cocoa",
+  "Mac OS X Cocoa",
   "gtk+",
   "",
   "ja:ko:zh",
