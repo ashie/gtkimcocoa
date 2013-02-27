@@ -29,6 +29,7 @@ struct _GtkIMContextCocoaPriv
   gchar *preedit_string;
   GdkRectangle cursor_location;
   gint cursor_pos;
+  gint selected_len;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GTK_TYPE_IM_CONTEXT_COCOA, GtkIMContextCocoaPriv))
@@ -125,6 +126,7 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
   [priv->view setGtkIMContextCocoa: context_cocoa];
   priv->preedit_string = g_strdup("");
   priv->cursor_pos = 0;
+  priv->selected_len = 0;
 }
 
 static void
@@ -252,13 +254,15 @@ set_use_preedit (GtkIMContext *context,
 void
 gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
                                          const gchar       *str,
-                                         gint               cursor_pos)
+                                         gint               cursor_pos,
+                                         gint               selected_len)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
   g_free(priv->preedit_string);
   priv->preedit_string = g_strdup(str ? str : "");
   priv->cursor_pos = cursor_pos;
+  priv->selected_len = selected_len;
 
   g_signal_emit_by_name(context, "preedit-changed");
 }

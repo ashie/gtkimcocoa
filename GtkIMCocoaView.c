@@ -119,7 +119,7 @@
 
 - (void) unmarkText
 {
-  gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0);
+  gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0, 0);
 }
 
 - (void) setMarkedText: (id)aString
@@ -136,7 +136,8 @@
 
   selectedRange = newSelection;
   gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str,
-                                          selectedRange.location);
+                                          selectedRange.location,
+                                          selectedRange.length);
 }
 
 - (void) doCommandBySelector: (SEL)aSelector
@@ -154,7 +155,7 @@
     str = [aString UTF8String];
   }
 
-  gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0);
+  gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0, 0);
   g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
 }
 
