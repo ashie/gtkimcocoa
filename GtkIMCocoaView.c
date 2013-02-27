@@ -23,7 +23,6 @@
 
 - (id) init {
     [super init];
-    markedText = NULL;
     return self;
 }
 
@@ -66,8 +65,9 @@
 }
 
 - (BOOL)hasMarkedText {
+    const gchar *text = gtk_im_context_cocoa_get_preedit_string(gtkIMContextCocoa);
     g_message("hasMarkedText");
-    if (markedText && *markedText)
+    if (text && *text)
         return YES;
     else
         return NO;
@@ -84,8 +84,6 @@
 }
 
 - (void)unmarkText {
-    g_free(markedText);
-    markedText = NULL;
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "");
     g_message("unmarkText");
 }
@@ -99,8 +97,6 @@
         str = [aString UTF8String];
     }
 
-    g_free(markedText);
-    markedText = g_strdup(str);
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str);
 
     g_message("setMarkedText: %s", str);
@@ -120,10 +116,7 @@
         str = [aString UTF8String];
     }
 
-    g_free(markedText);
-    markedText = NULL;
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "");
-
     g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
 
     g_message("insertText: \"%s\"", str);

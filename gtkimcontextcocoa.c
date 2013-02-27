@@ -248,3 +248,11 @@ gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
 
   g_signal_emit_by_name(context, "preedit-changed");
 }
+
+const gchar *
+gtk_im_context_cocoa_get_preedit_string (GtkIMContextCocoa *context)
+{
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+
+  return priv->preedit_string;
+}
