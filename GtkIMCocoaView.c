@@ -34,8 +34,6 @@
 
 - (BOOL) filterKeyDown: (NSEvent *) keyDownEvent
 {
-    g_message("filterKeyDown");
-
     /*
      * Since a event whose type is "NSFlagsChanged" throw exception, we ignore it.
      */
@@ -60,7 +58,6 @@
 
 - (NSUInteger) characterIndexForPoint: (NSPoint)aPoint
 {
-    g_message("characterIndexForPoint");
     return 0;
 }
 
@@ -76,14 +73,11 @@
     rect = NSMakeRect(location.x, location.y,
                       location.width, location.height);
 
-    g_message("firstRectForCharacterRange");
-
     return rect;
 }
 
 - (NSArray *) validAttributesForMarkedText
 {
-    g_message("validAttributesForMarkedText");
     return NULL;
 }
 
@@ -91,14 +85,13 @@
     (NSRange)aRange
     actualRange:(NSRangePointer)actualRange
 {
-    g_message("attributedSubstringForProposedRange");
     return NULL;
 }
 
 - (BOOL) hasMarkedText
 {
     const gchar *text = gtk_im_context_cocoa_get_preedit_string(gtkIMContextCocoa);
-    g_message("hasMarkedText");
+
     if (text && *text)
         return YES;
     else
@@ -109,8 +102,6 @@
 {
     const gchar *text = gtk_im_context_cocoa_get_preedit_string(gtkIMContextCocoa);
 
-    g_message("markedRange");
-
     if (text && *text)
         return NSMakeRange(0, g_utf8_strlen(text, -1));
     else
@@ -119,14 +110,12 @@
 
 - (NSRange) selectedRange
 {
-    g_message("selectedRange");
     return selectedRange;
 }
 
 - (void) unmarkText
 {
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0);
-    g_message("unmarkText");
 }
 
 - (void) setMarkedText: (id)aString
@@ -144,13 +133,10 @@
     selectedRange = newSelection;
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str,
                                             selectedRange.location);
-
-    g_message("setMarkedText: %s", str);
 }
 
 - (void) doCommandBySelector: (SEL)aSelector
 {
-    g_message("doCommandBySelector");
     [super doCommandBySelector:aSelector];
 }
 
@@ -166,8 +152,6 @@
 
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0);
     g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
-
-    g_message("insertText: \"%s\"", str);
 }
 
 
