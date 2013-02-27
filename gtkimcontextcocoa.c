@@ -34,34 +34,34 @@ struct _GtkIMContextCocoaPriv
 /* GObject class functions */
 static void gtk_im_context_cocoa_class_init (GtkIMContextCocoaClass *class);
 static void gtk_im_context_cocoa_init       (GtkIMContextCocoa      *context_cocoa);
-static void gtk_im_context_cocoa_dispose    (GObject *obj);
-static void gtk_im_context_cocoa_finalize   (GObject *obj);
+static void dispose    (GObject *obj);
+static void finalize   (GObject *obj);
 
-static void gtk_im_context_cocoa_set_property (GObject      *object,
-					       guint         prop_id,
-					       const GValue *value,
-					       GParamSpec   *pspec);
-static void gtk_im_context_cocoa_get_property (GObject      *object,
-					       guint         prop_id,
-					       GValue       *value,
-					       GParamSpec   *pspec);
+static void set_property (GObject      *object,
+                          guint         prop_id,
+                          const GValue *value,
+                          GParamSpec   *pspec);
+static void get_property (GObject      *object,
+                          guint         prop_id,
+                          GValue       *value,
+                          GParamSpec   *pspec);
 
 /* GtkIMContext class functions */
-static void gtk_im_context_cocoa_set_client_window   (GtkIMContext *context,
-						      GdkWindow    *client_window);
-static gboolean gtk_im_context_cocoa_filter_keypress (GtkIMContext   *context,
-						      GdkEventKey    *event);
-static void gtk_im_context_cocoa_reset               (GtkIMContext   *context);
-static void gtk_im_context_cocoa_get_preedit_string  (GtkIMContext   *context,
-						      gchar         **str,
-						      PangoAttrList **attrs,
-						      gint           *cursor_pos);
-static void gtk_im_context_cocoa_focus_in            (GtkIMContext   *context);
-static void gtk_im_context_cocoa_focus_out           (GtkIMContext   *context);
-static void gtk_im_context_cocoa_set_cursor_location (GtkIMContext   *context,
-						      GdkRectangle   *area);
-static void gtk_im_context_cocoa_set_use_preedit     (GtkIMContext   *context,
-						      gboolean        use_preedit);
+static void set_client_window   (GtkIMContext *context,
+                                 GdkWindow    *client_window);
+static gboolean filter_keypress (GtkIMContext   *context,
+                                 GdkEventKey    *event);
+static void reset               (GtkIMContext   *context);
+static void get_preedit_string  (GtkIMContext   *context,
+                                 gchar         **str,
+                                 PangoAttrList **attrs,
+                                 gint           *cursor_pos);
+static void focus_in            (GtkIMContext   *context);
+static void focus_out           (GtkIMContext   *context);
+static void set_cursor_location (GtkIMContext   *context,
+                                 GdkRectangle   *area);
+static void set_use_preedit     (GtkIMContext   *context,
+                                 gboolean        use_preedit);
 
 GType gtk_type_im_context_cocoa = 0;
 static GObjectClass *parent_class;
@@ -95,19 +95,19 @@ gtk_im_context_cocoa_class_init (GtkIMContextCocoaClass *class)
 
   parent_class = g_type_class_peek_parent (class);
 
-  gobject_class->finalize     = gtk_im_context_cocoa_finalize;
-  gobject_class->dispose      = gtk_im_context_cocoa_dispose;
-  gobject_class->set_property = gtk_im_context_cocoa_set_property;
-  gobject_class->get_property = gtk_im_context_cocoa_get_property;
+  gobject_class->finalize     = finalize;
+  gobject_class->dispose      = dispose;
+  gobject_class->set_property = set_property;
+  gobject_class->get_property = get_property;
 
-  im_context_class->set_client_window   = gtk_im_context_cocoa_set_client_window;
-  im_context_class->filter_keypress     = gtk_im_context_cocoa_filter_keypress;
-  im_context_class->reset               = gtk_im_context_cocoa_reset;
-  im_context_class->get_preedit_string  = gtk_im_context_cocoa_get_preedit_string;
-  im_context_class->focus_in            = gtk_im_context_cocoa_focus_in;
-  im_context_class->focus_out           = gtk_im_context_cocoa_focus_out;
-  im_context_class->set_cursor_location = gtk_im_context_cocoa_set_cursor_location;
-  im_context_class->set_use_preedit     = gtk_im_context_cocoa_set_use_preedit;
+  im_context_class->set_client_window   = set_client_window;
+  im_context_class->filter_keypress     = filter_keypress;
+  im_context_class->reset               = reset;
+  im_context_class->get_preedit_string  = get_preedit_string;
+  im_context_class->focus_in            = focus_in;
+  im_context_class->focus_out           = focus_out;
+  im_context_class->set_cursor_location = set_cursor_location;
+  im_context_class->set_use_preedit     = set_use_preedit;
 
   g_type_class_add_private(gobject_class, sizeof(GtkIMContextCocoaPriv));
 }
@@ -125,7 +125,7 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
 }
 
 static void
-gtk_im_context_cocoa_dispose (GObject *obj)
+dispose (GObject *obj)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(obj);
 
@@ -145,25 +145,25 @@ gtk_im_context_cocoa_dispose (GObject *obj)
 }
 
 static void
-gtk_im_context_cocoa_finalize (GObject *obj)
+finalize (GObject *obj)
 {
   if (G_OBJECT_CLASS (parent_class)->finalize)
     G_OBJECT_CLASS (parent_class)->finalize (obj);
 }
 
 static void
-gtk_im_context_cocoa_set_property (GObject      *object,
-				   guint         prop_id,
-				   const GValue *value,
-				   GParamSpec   *pspec)
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
 {
 }
 
 static void
-gtk_im_context_cocoa_get_property (GObject    *object,
-				   guint       prop_id,
-				   GValue     *value,
-				   GParamSpec *pspec)
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
 {
 }
 
@@ -174,8 +174,8 @@ gtk_im_context_cocoa_new (void)
 }
 
 static void
-gtk_im_context_cocoa_set_client_window (GtkIMContext *context,
-					GdkWindow    *client_window)
+set_client_window (GtkIMContext *context,
+                   GdkWindow    *client_window)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
@@ -183,8 +183,8 @@ gtk_im_context_cocoa_set_client_window (GtkIMContext *context,
 }
 
 static gboolean
-gtk_im_context_cocoa_filter_keypress (GtkIMContext *context,
-				      GdkEventKey  *event)
+filter_keypress (GtkIMContext *context,
+                 GdkEventKey  *event)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
   if (event->type == GDK_KEY_PRESS) {
@@ -195,15 +195,15 @@ gtk_im_context_cocoa_filter_keypress (GtkIMContext *context,
 }
 
 static void
-gtk_im_context_cocoa_reset (GtkIMContext *context)
+reset (GtkIMContext *context)
 {
 }
 
 static void
-gtk_im_context_cocoa_get_preedit_string (GtkIMContext   *context,
-					 gchar         **str,
-					 PangoAttrList **attrs,
-					 gint           *cursor_pos)
+get_preedit_string (GtkIMContext   *context,
+                    gchar         **str,
+                    PangoAttrList **attrs,
+                    gint           *cursor_pos)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
@@ -216,30 +216,30 @@ gtk_im_context_cocoa_get_preedit_string (GtkIMContext   *context,
 }
 
 static void
-gtk_im_context_cocoa_focus_in (GtkIMContext *context)
+focus_in (GtkIMContext *context)
 {
 }
 
 static void
-gtk_im_context_cocoa_focus_out (GtkIMContext *context)
+focus_out (GtkIMContext *context)
 {
 }
 
 static void
-gtk_im_context_cocoa_set_cursor_location (GtkIMContext *context,
-					  GdkRectangle *area)
+set_cursor_location (GtkIMContext *context,
+                     GdkRectangle *area)
 {
 }
 
 static void
-gtk_im_context_cocoa_set_use_preedit (GtkIMContext *context,
-				      gboolean      use_preedit)
+set_use_preedit (GtkIMContext *context,
+                 gboolean      use_preedit)
 {
 }
 
 void
-gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
-                                         const gchar       *str)
+set_preedit_string (GtkIMContextCocoa *context,
+                    const gchar       *str)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
