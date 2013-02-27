@@ -19,7 +19,7 @@
 
 #include "gtkimcontextcocoa.h"
 #include <gdk/gdkquartz.h>
-#include "GtkIMCocoaView.h"
+#include "GtkCocoaIMClient.h"
 
 typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv

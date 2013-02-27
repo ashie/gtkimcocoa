@@ -17,7 +17,7 @@
  *
  */
 
-#include "GtkIMCocoaView.h"
+#include "GtkCocoaIMClient.h"
 
 @implementation GtkCocoaIMClient
 
