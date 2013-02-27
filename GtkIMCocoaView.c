@@ -36,7 +36,6 @@
 {
     g_message("filterKeyDown");
 
-
     /*
      * Since a event whose type is "NSFlagsChanged" throw exception, we ignore it.
      */
