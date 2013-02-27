@@ -238,8 +238,8 @@ set_use_preedit (GtkIMContext *context,
 }
 
 void
-set_preedit_string (GtkIMContextCocoa *context,
-                    const gchar       *str)
+gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
+                                         const gchar       *str)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
