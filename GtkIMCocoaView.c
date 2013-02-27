@@ -83,14 +83,14 @@
 
 - (NSArray *) validAttributesForMarkedText
 {
-  return NULL;
+  return nil;
 }
 
 - (NSAttributedString *) attributedSubstringForProposedRange:
   (NSRange)aRange
   actualRange:(NSRangePointer)actualRange
 {
-  return NULL;
+  return nil;
 }
 
 - (BOOL) hasMarkedText
