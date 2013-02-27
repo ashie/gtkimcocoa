@@ -27,6 +27,7 @@ struct _GtkIMContextCocoaPriv
   GdkWindow *client_window;
   GtkIMCocoaView *view;
   gchar *preedit_string;
+  GdkRectangle cursor_location;
   gint cursor_pos;
 };
 
@@ -237,6 +238,9 @@ static void
 set_cursor_location (GtkIMContext *context,
                      GdkRectangle *area)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  if (area)
+    priv->cursor_location = *area;
 }
 
 static void
