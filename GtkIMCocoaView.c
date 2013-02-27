@@ -24,6 +24,7 @@
 - (id) init
 {
     [super init];
+    selectedRange = NSMakeRange(0, 0);
     activated = NO;
     return self;
 }
