@@ -23,7 +23,7 @@
 #include <gdk/gdkquartz.h>
 #include "gtkimcontextcocoa.h"
 
-@interface GtkIMCocoaView : NSView <NSTextInputClient> {
+@interface GtkCocoaIMClient : NSView <NSTextInputClient> {
   GtkIMContextCocoa *gtkIMContextCocoa;
   NSRange markedRange;
   NSRange selectedRange;

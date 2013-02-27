@@ -19,7 +19,7 @@
 
 #include "GtkIMCocoaView.h"
 
-@implementation GtkIMCocoaView
+@implementation GtkCocoaIMClient
 
 - (id) init
 {

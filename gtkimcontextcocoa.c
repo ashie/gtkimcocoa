@@ -25,7 +25,7 @@ typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
 {
   GdkWindow *client_window;
-  GtkIMCocoaView *view;
+  GtkCocoaIMClient *im_client;
   gchar *preedit_string;
   GdkRectangle cursor_location;
   gint cursor_pos;
@@ -122,8 +122,8 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
   NSRect rect = NSMakeRect(0, 0, 0, 0);
 
   priv->client_window = NULL;
-  priv->view = [[GtkIMCocoaView alloc] initWithFrame:rect];
-  [priv->view setGtkIMContextCocoa: context_cocoa];
+  priv->im_client = [[GtkCocoaIMClient alloc] initWithFrame:rect];
+  [priv->im_client setGtkIMContextCocoa: context_cocoa];
   priv->preedit_string = g_strdup("");
   priv->cursor_pos = 0;
   priv->selected_len = 0;
@@ -139,10 +139,10 @@ dispose (GObject *obj)
     priv->preedit_string = NULL;
   }
 
-  if (priv->view) {
-    [priv->view setGtkIMContextCocoa: nil];
-    [priv->view release];
-    priv->view = NULL;
+  if (priv->im_client) {
+    [priv->im_client setGtkIMContextCocoa: nil];
+    [priv->im_client release];
+    priv->im_client = NULL;
   }
 
   if (G_OBJECT_CLASS (parent_class)->dispose)
@@ -197,7 +197,7 @@ filter_keypress (GtkIMContext *context,
     gboolean preediting = (priv->preedit_string && *priv->preedit_string);
     gboolean handled;
 
-    handled = [priv->view filterKeyDown: nsevent];
+    handled = [priv->im_client filterKeyDown: nsevent];
     preediting = preediting || (priv->preedit_string && *priv->preedit_string);
 
     return handled && preediting;
@@ -210,7 +210,7 @@ reset (GtkIMContext *context)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
-  [priv->view unmarkText];
+  [priv->im_client unmarkText];
 }
 
 static PangoAttrList *
