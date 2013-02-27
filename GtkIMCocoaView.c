@@ -36,6 +36,13 @@
 {
     g_message("filterKeyDown");
 
+
+    /*
+     * Since a event whose type is "NSFlagsChanged" throw exception, we ignore it.
+     */
+    if ([keyDownEvent type] == NSFlagsChanged)
+        return NO;
+
     /*
      * FIXME:
      * Although the reference manual says "shouldn't call directly",
