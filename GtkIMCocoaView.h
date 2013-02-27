@@ -25,7 +25,6 @@
 
 @interface GtkIMCocoaView : NSView <NSTextInputClient> {
     GtkIMContextCocoa *gtkIMContextCocoa;
-    gchar *markedText;
 }
 
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context;
