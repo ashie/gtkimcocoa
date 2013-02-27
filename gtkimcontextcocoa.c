@@ -210,7 +210,10 @@ reset (GtkIMContext *context)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
-  [priv->im_client unmarkText];
+  g_free(priv->preedit_string);
+  priv->preedit_string = g_strdup("");
+  priv->cursor_pos = 0;
+  priv->selected_len = 0;
 }
 
 static PangoAttrList *
