@@ -121,7 +121,7 @@
     }
 
     g_free(markedText);
-    markedText=NULL;
+    markedText = NULL;
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "");
 
     g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
