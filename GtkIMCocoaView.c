@@ -156,7 +156,9 @@
     str = [aString UTF8String];
   }
 
-  gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0, 0);
+  if ([self hasMarkedText])
+    [self unmarkText];
+
   g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
 }
 
