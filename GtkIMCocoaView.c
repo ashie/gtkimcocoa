@@ -21,6 +21,12 @@
 
 @implementation GtkIMCocoaView
 
+- (id) init {
+    [super init];
+    markedText = NULL;
+    return self;
+}
+
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context {
     gtkIMContextCocoa = context;
 }
@@ -61,7 +67,10 @@
 
 - (BOOL)hasMarkedText {
     g_message("hasMarkedText");
-    return NO;
+    if (markedText && *markedText)
+        return YES;
+    else
+        return NO;
 }
 
 - (NSRange)markedRange {
@@ -86,6 +95,9 @@
     } else {
         str = [aString UTF8String];
     }
+
+    g_free(markedText);
+    markedText = g_strdup(str);
 
     g_message("setMarkedText: %s", str);
 }
