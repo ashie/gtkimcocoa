@@ -210,6 +210,44 @@ reset (GtkIMContext *context)
 {
 }
 
+static PangoAttrList *
+create_pango_attr_list (GtkIMContextCocoaPriv *priv)
+{
+  PangoAttrList *attrs;
+  PangoAttribute *attr;
+  gint text_len = g_utf8_strlen(priv->preedit_string, -1);
+  gchar *head = priv->preedit_string;
+  gint last_pos = 0;
+  gint selected_tail_pos = priv->cursor_pos + priv->selected_len;
+
+#define ADD_ATTR(tail_pos, type) \
+{ \
+  gchar *tail = g_utf8_offset_to_pointer(priv->preedit_string, tail_pos); \
+  attr = pango_attr_underline_new(type); \
+  attr->start_index = last_pos; \
+  attr->end_index = attr->start_index + (tail - head); \
+  pango_attr_list_change(attrs, attr); \
+  head = tail; \
+  last_pos = attr->end_index; \
+}
+
+  attrs = pango_attr_list_new();
+
+  if (!priv->preedit_string || !*priv->preedit_string)
+    return attrs;
+
+  if (priv->cursor_pos > 0)
+    ADD_ATTR(priv->cursor_pos, PANGO_UNDERLINE_SINGLE);
+  if (priv->selected_len > 0)
+    ADD_ATTR(priv->cursor_pos + priv->selected_len, PANGO_UNDERLINE_DOUBLE);
+  if (head != priv->preedit_string && selected_tail_pos)
+    ADD_ATTR(text_len, PANGO_UNDERLINE_SINGLE);
+
+#undef ADD_ATTR
+
+  return attrs;
+}
+
 static void
 get_preedit_string (GtkIMContext   *context,
                     gchar         **str,
@@ -221,7 +259,7 @@ get_preedit_string (GtkIMContext   *context,
   if (str)
     *str = g_strdup(priv->preedit_string);
   if (attrs)
-    *attrs = pango_attr_list_new();
+    *attrs = create_pango_attr_list(priv);
   if (cursor_pos)
     *cursor_pos = priv->cursor_pos;
 }
