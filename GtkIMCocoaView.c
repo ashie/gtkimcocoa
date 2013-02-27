@@ -24,6 +24,7 @@
 - (id) init
 {
     [super init];
+    activated = NO;
     return self;
 }
 
@@ -41,12 +42,14 @@
         return NO;
 
     /*
-     * FIXME:
-     * Although the reference manual says "shouldn't call directly",
-     * I can't get preedit events without it.
-     * http://developer.apple.com/library/mac/documentation/cocoa/reference/NSTextInputContext_Class/Reference/Reference.html#//apple_ref/occ/instm/NSTextInputContext/activate
+     * Although Apple's reference manual says "You should not call this method
+     * directly", we should do it because a NSWindow is needed to activate the
+     * inputContext automatically. This NSView never have NSWindow.
      */
-    [[self inputContext] activate];
+    if (!activated) {
+        [[self inputContext] activate];
+        activated = YES;
+    }
 
     return [[self inputContext] handleEvent:keyDownEvent];
 }
