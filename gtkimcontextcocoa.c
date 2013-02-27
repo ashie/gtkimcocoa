@@ -243,8 +243,6 @@ gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
-  g_return_if_fail(GTK_IS_IM_CONTEXT_COCOA(context));
-
   g_free(priv->preedit_string);
   priv->preedit_string = g_strdup(str ? str : "");
 
