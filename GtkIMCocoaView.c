@@ -107,8 +107,14 @@
 
 - (NSRange) markedRange
 {
+    const gchar *text = gtk_im_context_cocoa_get_preedit_string(gtkIMContextCocoa);
+
     g_message("markedRange");
-    return NSMakeRange(0, 0);
+
+    if (text && *text)
+        return NSMakeRange(0, g_utf8_strlen(text, -1));
+    else
+        return NSMakeRange(NSNotFound, 0);
 }
 
 - (NSRange) selectedRange
