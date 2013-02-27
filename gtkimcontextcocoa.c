@@ -27,6 +27,7 @@ struct _GtkIMContextCocoaPriv
   GdkWindow *client_window;
   GtkIMCocoaView *view;
   gchar *preedit_string;
+  gint cursor_pos;
 };
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GTK_TYPE_IM_CONTEXT_COCOA, GtkIMContextCocoaPriv))
@@ -122,6 +123,7 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
   priv->view = [[GtkIMCocoaView alloc] initWithFrame:rect];
   [priv->view setGtkIMContextCocoa: context_cocoa];
   priv->preedit_string = g_strdup("");
+  priv->cursor_pos = 0;
 }
 
 static void
@@ -212,7 +214,7 @@ get_preedit_string (GtkIMContext   *context,
   if (attrs)
     *attrs = pango_attr_list_new();
   if (cursor_pos)
-    cursor_pos = 0;
+    *cursor_pos = priv->cursor_pos;
 }
 
 static void
@@ -239,12 +241,14 @@ set_use_preedit (GtkIMContext *context,
 
 void
 gtk_im_context_cocoa_set_preedit_string (GtkIMContextCocoa *context,
-                                         const gchar       *str)
+                                         const gchar       *str,
+                                         gint               cursor_pos)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
 
   g_free(priv->preedit_string);
   priv->preedit_string = g_strdup(str ? str : "");
+  priv->cursor_pos = cursor_pos;
 
   g_signal_emit_by_name(context, "preedit-changed");
 }

@@ -99,7 +99,7 @@
 
 - (void) unmarkText
 {
-    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "");
+    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0);
     g_message("unmarkText");
 }
 
@@ -115,8 +115,9 @@
         str = [aString UTF8String];
     }
 
-    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str);
     selectedRange = newSelection;
+    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str,
+                                            selectedRange.location);
 
     g_message("setMarkedText: %s", str);
 }
@@ -137,7 +138,7 @@
         str = [aString UTF8String];
     }
 
-    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "");
+    gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0);
     g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
 
     g_message("insertText: \"%s\"", str);
