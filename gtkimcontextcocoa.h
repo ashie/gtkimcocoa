@@ -56,6 +56,8 @@ void          gtk_im_context_cocoa_set_preedit_string
                                                   gint               cursor_pos);
 const gchar  *gtk_im_context_cocoa_get_preedit_string
                                                  (GtkIMContextCocoa *context);
+GdkRectangle  gtk_im_context_cocoa_get_cursor_location
+                                                 (GtkIMContextCocoa *context);
 
 G_END_DECLS
 

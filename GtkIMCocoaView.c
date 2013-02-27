@@ -69,8 +69,17 @@
     (NSRange)aRange
     actualRange:(NSRangePointer)actualRange
 {
+    GdkRectangle location;
+    NSRect rect;
+
+    location = gtk_im_context_cocoa_get_cursor_location(gtkIMContextCocoa);
+    location.y = gdk_screen_height() - location.y - location.height;
+    rect = NSMakeRect(location.x, location.y,
+                      location.width, location.height);
+
     g_message("firstRectForCharacterRange");
-    return NSMakeRect(0, 0, 0, 0);
+
+    return rect;
 }
 
 - (NSArray *) validAttributesForMarkedText

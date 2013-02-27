@@ -270,3 +270,22 @@ gtk_im_context_cocoa_get_preedit_string (GtkIMContextCocoa *context)
 
   return priv->preedit_string;
 }
+
+GdkRectangle
+gtk_im_context_cocoa_get_cursor_location(GtkIMContextCocoa *context)
+{
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  GdkRectangle location = {0, 0, 0, 0};
+  /* FIXME: should be detected */
+  gint string_height = 24;
+
+  if (priv->client_window) {
+    location = priv->cursor_location;
+    location.height = string_height;
+    gdk_window_get_root_coords(priv->client_window,
+                               location.x, location.y,
+                               &location.x, &location.y);
+  }
+
+  return location;
+}
