@@ -94,7 +94,7 @@
 - (NSRange) selectedRange
 {
     g_message("selectedRange");
-    return NSMakeRange(0, 0);
+    return selectedRange;
 }
 
 - (void) unmarkText
@@ -116,6 +116,7 @@
     }
 
     gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str);
+    selectedRange = newSelection;
 
     g_message("setMarkedText: %s", str);
 }
@@ -126,7 +127,7 @@
     [super doCommandBySelector:aSelector];
 }
 
-- (void) insertText: (id) aString replacementRange: (NSRange)replacementRange
+- (void) insertText: (id)aString replacementRange:(NSRange)replacementRange
 {
     const char *str;
     

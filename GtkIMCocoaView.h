@@ -25,6 +25,7 @@
 
 @interface GtkIMCocoaView : NSView <NSTextInputClient> {
     GtkIMContextCocoa *gtkIMContextCocoa;
+    NSRange selectedRange;
 }
 
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context;
