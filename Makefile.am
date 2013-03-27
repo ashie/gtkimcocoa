@@ -15,3 +15,5 @@ im_cocoa_la_SOURCES = \
 	gtkimcontextcocoa.c gtkimcontextcocoa.h \
 	GtkCocoaIMClient.c GtkCocoaIMClient.h \
 	imcocoa.c
+
+EXTRA_DIST=README.md
