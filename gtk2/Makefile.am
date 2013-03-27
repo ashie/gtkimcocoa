@@ -7,7 +7,7 @@ if HAVE_GTK2
 im_cocoa_LTLIBRARIES = im-cocoa.la
 endif
 
-im_cocoadir = $(GTK3_IM_MODULEDIR)
+im_cocoadir = $(GTK2_IM_MODULEDIR)
 
 im_cocoa_la_CFLAGS = \
 	$(GTK2_CFLAGS)
