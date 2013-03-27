@@ -48,15 +48,27 @@ dnl
 dnl Checks for gtk
 dnl
 GTK3_REQUIRED=3.0.0
+PKG_CHECK_MODULES(GTK3, gtk+-3.0 >= GTK3_REQUIRED,
+                  [have_gtk3=yes], [have_gtk3=no])
+AM_CONDITIONAL(HAVE_GTK3, test $have_gtk3 = "yes")
+if test $have_gtk3 = "yes"; then
+    gtk3_binary_version=`$PKG_CONFIG --variable=gtk_binary_version gtk+-3.0`
+    gtk3_libdir=`$PKG_CONFIG --variable=libdir gtk+-3.0`
+    GTK3_IM_MODULEDIR="$gtk3_libdir"/gtk-3.0/$gtk3_binary_version/immodules
+    AC_SUBST(GTK3_IM_MODULEDIR)
+fi
 
-AC_SUBST(GTK3_REQUIRED)
 
-PKG_CHECK_MODULES(GTK3, gtk+-3.0 >= GTK3_REQUIRED)
-
-gtk3_binary_version=`$PKG_CONFIG --variable=gtk_binary_version gtk+-3.0`
-gtk3_libdir=`$PKG_CONFIG --variable=libdir gtk+-3.0`
-GTK3_IM_MODULEDIR="$gtk3_libdir"/gtk-3.0/$gtk3_binary_version/immodules
-AC_SUBST(GTK3_IM_MODULEDIR)
+GTK2_REQUIRED=2.24.0
+PKG_CHECK_MODULES(GTK2, gtk+-2.0 >= GTK2_REQUIRED,
+                  [have_gtk2=yes], [have_gtk2=no])
+AM_CONDITIONAL(HAVE_GTK2, test $have_gtk2 = "yes")
+if test $have_gtk2 = "yes"; then
+    gtk2_binary_version=`$PKG_CONFIG --variable=gtk_binary_version gtk+-2.0`
+    gtk2_libdir=`$PKG_CONFIG --variable=libdir gtk+-2.0`
+    GTK2_IM_MODULEDIR="$gtk2_libdir"/gtk-2.0/$gtk2_binary_version/immodules
+    AC_SUBST(GTK2_IM_MODULEDIR)
+fi
 
 
 dnl
@@ -79,7 +91,15 @@ dnl
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
+gtk2/Makefile
 test/Makefile
 ])
 
 AC_OUTPUT
+
+AC_MSG_RESULT([
+Configure result:
+
+  GTK+3: ${have_gtk3}
+  GTK+2: ${have_gtk2}
+])

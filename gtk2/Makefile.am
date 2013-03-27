@@ -3,18 +3,20 @@
 AM_CPPFLAGS = \
 	-Wall -x objective-c
 
-if HAVE_GTK3
+if HAVE_GTK2
 im_cocoa_LTLIBRARIES = im-cocoa.la
 endif
 
 im_cocoadir = $(GTK3_IM_MODULEDIR)
 
 im_cocoa_la_CFLAGS = \
-	$(GTK3_CFLAGS)
+	$(GTK2_CFLAGS)
 im_cocoa_la_LDFLAGS = \
 	-rpath $(im_cocoadir) -avoid-version -module $(no_undefined)
-im_cocoa_la_LIBADD = $(GTK3_LIBS)
+im_cocoa_la_LIBADD = $(GTK2_LIBS)
 im_cocoa_la_SOURCES = \
-	gtkimcontextcocoa.c gtkimcontextcocoa.h \
-	GtkCocoaIMClient.c GtkCocoaIMClient.h \
-	imcocoa.c
+	$(top_srcdir)/src/gtkimcontextcocoa.c \
+	$(top_srcdir)/src/gtkimcontextcocoa.h \
+	$(top_srcdir)/src/GtkCocoaIMClient.c \
+	$(top_srcdir)/src/GtkCocoaIMClient.h \
+	$(top_srcdir)/src/imcocoa.c
