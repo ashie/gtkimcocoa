@@ -16,4 +16,4 @@ im_cocoa_la_SOURCES = \
 	GtkCocoaIMClient.c GtkCocoaIMClient.h \
 	imcocoa.c
 
-EXTRA_DIST=README.md
+EXTRA_DIST = README.md
