@@ -44,7 +44,7 @@ create_window (void)
 #if (GTK_MAJOR_VERSION >= 3)
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 #else
-    vbox = gtk_hbox_new(FALSE, 0);
+    vbox = gtk_vbox_new(FALSE, 0);
 #endif
     gtk_container_add(GTK_CONTAINER(window), vbox);
     gtk_widget_show(vbox);
