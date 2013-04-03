@@ -21,9 +21,10 @@
 
 @implementation GtkCocoaIMClient
 
-- (id) init
+- (id) initWithFrame: (NSRect) frame
 {
-  [super init];
+  [super initWithFrame: frame];
+
   markedRange = NSMakeRange(NSNotFound, 0);
   selectedRange = NSMakeRange(NSNotFound, 0);
   activated = NO;
