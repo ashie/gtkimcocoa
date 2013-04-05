@@ -1,6 +1,6 @@
-diff -Nur gtk+-2.24.16-bak/gdk/quartz/gdkkeys-quartz.c gtk+-2.24.16/gdk/quartz/gdkkeys-quartz.c
---- gtk+-2.24.16-bak/gdk/quartz/gdkkeys-quartz.c	2013-04-03 19:11:17.000000000 +0900
-+++ gtk+-2.24.16/gdk/quartz/gdkkeys-quartz.c	2013-04-03 19:26:46.000000000 +0900
+diff -Nur gtk+-2.24.17-bak/gdk/quartz/gdkkeys-quartz.c gtk+-2.24.17/gdk/quartz/gdkkeys-quartz.c
+--- gtk+-2.24.17-bak/gdk/quartz/gdkkeys-quartz.c	2013-04-05 16:33:22.751903860 +0900
++++ gtk+-2.24.17/gdk/quartz/gdkkeys-quartz.c	2013-04-05 16:38:25.383917698 +0900
 @@ -246,7 +246,7 @@
  };
  
@@ -67,12 +67,10 @@ diff -Nur gtk+-2.24.16-bak/gdk/quartz/gdkkeys-quartz.c gtk+-2.24.16/gdk/quartz/g
    *n_entries = 0;
  
    if (hardware_keycode > NUM_KEYCODES)
-@@ -689,10 +709,6 @@
+@@ -689,8 +709,6 @@
    g_return_val_if_fail (keymap == NULL || GDK_IS_KEYMAP (keymap), FALSE);
    g_return_val_if_fail (group >= 0 && group <= 1, FALSE);
    
--  maybe_update_keymap ();
--
 -  maybe_update_keymap ();
 -
    if (keyval)
