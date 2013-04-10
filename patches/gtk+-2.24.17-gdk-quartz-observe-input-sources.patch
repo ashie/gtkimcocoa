@@ -1,6 +1,6 @@
 diff -Nur gtk+-2.24.17-bak/gdk/quartz/gdkkeys-quartz.c gtk+-2.24.17/gdk/quartz/gdkkeys-quartz.c
 --- gtk+-2.24.17-bak/gdk/quartz/gdkkeys-quartz.c	2013-04-05 16:33:22.751903860 +0900
-+++ gtk+-2.24.17/gdk/quartz/gdkkeys-quartz.c	2013-04-05 16:38:25.383917698 +0900
++++ gtk+-2.24.17/gdk/quartz/gdkkeys-quartz.c	2013-04-11 01:41:35.365627798 +0900
 @@ -246,7 +246,7 @@
  };
  
@@ -10,7 +10,7 @@ diff -Nur gtk+-2.24.17-bak/gdk/quartz/gdkkeys-quartz.c gtk+-2.24.17/gdk/quartz/g
  {
    const void *chr_data = NULL;
  
-@@ -485,13 +485,37 @@
+@@ -485,6 +485,34 @@
      }
  }
  
@@ -27,52 +27,51 @@ diff -Nur gtk+-2.24.17-bak/gdk/quartz/gdkkeys-quartz.c gtk+-2.24.17/gdk/quartz/g
 +static void
 +init_keymap (void)
 +{
-+    update_keymap ();
-+    CFNotificationCenterAddObserver (CFNotificationCenterGetDistributedCenter (),
-+                                     NULL,
-+                                     &input_sources_changed_notification,
-+                                     CFSTR ("AppleSelectedInputSourcesChangedNotification"),
-+                                     NULL,
-+                                     CFNotificationSuspensionBehaviorDeliverImmediately);
++  static gboolean initialized = FALSE;
++
++  if (initialized)
++    return;
++
++  update_keymap ();
++  CFNotificationCenterAddObserver (CFNotificationCenterGetDistributedCenter (),
++                                   NULL,
++                                   &input_sources_changed_notification,
++                                   CFSTR ("AppleSelectedInputSourcesChangedNotification"),
++                                   NULL,
++                                   CFNotificationSuspensionBehaviorDeliverImmediately);
++  initialized = TRUE;
 +}
 +
  GdkKeymap *
  gdk_keymap_get_for_display (GdkDisplay *display)
  {
-   g_return_val_if_fail (display == gdk_display_get_default (), NULL);
- 
--  if (default_keymap == NULL)
-+  if (default_keymap == NULL) {
-     default_keymap = g_object_new (gdk_keymap_get_type (), NULL);
-+    init_keymap ();
-+  }
- 
-   return default_keymap;
- }
-@@ -530,8 +554,6 @@
+@@ -530,7 +558,7 @@
    g_return_val_if_fail (n_keys != NULL, FALSE);
    g_return_val_if_fail (keyval != 0, FALSE);
  
 -  maybe_update_keymap ();
--
++  init_keymap ();
+ 
    *n_keys = 0;
    keys_array = g_array_new (FALSE, FALSE, sizeof (GdkKeymapKey));
- 
-@@ -570,8 +592,6 @@
+@@ -570,7 +598,7 @@
    g_return_val_if_fail (keymap == NULL || GDK_IS_KEYMAP (keymap), FALSE);
    g_return_val_if_fail (n_entries != NULL, FALSE);
  
 -  maybe_update_keymap ();
--
++  init_keymap();
+ 
    *n_entries = 0;
  
-   if (hardware_keycode > NUM_KEYCODES)
-@@ -689,8 +709,6 @@
+@@ -688,9 +716,9 @@
+ 
    g_return_val_if_fail (keymap == NULL || GDK_IS_KEYMAP (keymap), FALSE);
    g_return_val_if_fail (group >= 0 && group <= 1, FALSE);
-   
+-  
 -  maybe_update_keymap ();
--
+ 
++  init_keymap ();
++  
    if (keyval)
      *keyval = 0;
    if (effective_group)
