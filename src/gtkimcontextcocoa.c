@@ -25,12 +25,15 @@ typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
 {
   GdkWindow *client_window;
-  GtkCocoaIMClient *im_client;
   gchar *preedit_string;
   GdkRectangle cursor_location;
   gint cursor_pos;
   gint selected_len;
+  gboolean focused;
 };
+
+GtkCocoaIMClient *im_client = NULL;
+GStaticMutex im_client_mutex = G_STATIC_MUTEX_INIT;
 
 #define GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), GTK_TYPE_IM_CONTEXT_COCOA, GtkIMContextCocoaPriv))
 
@@ -116,17 +119,29 @@ gtk_im_context_cocoa_class_init (GtkIMContextCocoaClass *class)
 }
 
 static void
+set_focused_context(GtkIMContextCocoa *context_cocoa)
+{
+  g_static_mutex_lock(&im_client_mutex);
+
+  if (!im_client) {
+    NSRect rect = NSMakeRect(0, 0, 0, 0);
+    im_client = [[GtkCocoaIMClient alloc] initWithFrame:rect];
+  }
+  [im_client setGtkIMContextCocoa: context_cocoa];
+
+  g_static_mutex_unlock(&im_client_mutex);
+}
+
+static void
 gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context_cocoa);
-  NSRect rect = NSMakeRect(0, 0, 0, 0);
 
   priv->client_window = NULL;
-  priv->im_client = [[GtkCocoaIMClient alloc] initWithFrame:rect];
-  [priv->im_client setGtkIMContextCocoa: context_cocoa];
   priv->preedit_string = g_strdup("");
   priv->cursor_pos = 0;
   priv->selected_len = 0;
+  priv->focused = FALSE;
 }
 
 static void
@@ -137,12 +152,6 @@ dispose (GObject *obj)
   if (priv->preedit_string) {
     g_free(priv->preedit_string);
     priv->preedit_string = NULL;
-  }
-
-  if (priv->im_client) {
-    [priv->im_client setGtkIMContextCocoa: nil];
-    [priv->im_client release];
-    priv->im_client = NULL;
   }
 
   if (G_OBJECT_CLASS (parent_class)->dispose)
@@ -192,12 +201,19 @@ filter_keypress (GtkIMContext *context,
                  GdkEventKey  *event)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+
+  if (!priv->focused)
+    return FALSE;
+
   if (event->type == GDK_KEY_PRESS) {
     NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
     gboolean preediting = (priv->preedit_string && *priv->preedit_string);
     gboolean handled;
 
-    handled = [priv->im_client filterKeyDown: nsevent];
+    g_static_mutex_lock(&im_client_mutex);
+    handled = [im_client filterKeyDown: nsevent];
+    g_static_mutex_unlock(&im_client_mutex);
+
     preediting = preediting || (priv->preedit_string && *priv->preedit_string);
 
     return handled && preediting;
@@ -273,11 +289,17 @@ get_preedit_string (GtkIMContext   *context,
 static void
 focus_in (GtkIMContext *context)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  set_focused_context(GTK_IM_CONTEXT_COCOA(context));
+  priv->focused = TRUE;
 }
 
 static void
 focus_out (GtkIMContext *context)
 {
+  GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  priv->focused = FALSE;
+  set_focused_context(NULL);
 }
 
 static void
