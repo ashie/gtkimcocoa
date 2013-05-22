@@ -28,6 +28,7 @@
   markedRange = NSMakeRange(NSNotFound, 0);
   selectedRange = NSMakeRange(NSNotFound, 0);
   activated = NO;
+  handled = NO;
   return self;
 }
 
@@ -55,7 +56,9 @@
     activated = YES;
   }
 
-  return [[self inputContext] handleEvent:keyDownEvent];
+  handled = NO;
+  [self interpretKeyEvents:[NSArray arrayWithObject:keyDownEvent]];
+  return handled;
 }
 
 - (void) keyDown: (NSEvent *)theEvent
@@ -117,6 +120,7 @@
 
 - (void) unmarkText
 {
+  handled = YES;
   gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, "", 0, 0);
 }
 
@@ -138,6 +142,7 @@
   else
     markedRange = NSMakeRange(NSNotFound, 0);
 
+  handled = YES;
   gtk_im_context_cocoa_set_preedit_string(gtkIMContextCocoa, str,
                                           selectedRange.location,
                                           selectedRange.length);
@@ -161,6 +166,7 @@
   if ([self hasMarkedText])
     [self unmarkText];
 
+  handled = YES;
   g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
 }
 

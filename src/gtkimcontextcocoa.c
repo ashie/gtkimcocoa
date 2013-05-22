@@ -207,16 +207,13 @@ filter_keypress (GtkIMContext *context,
 
   if (event->type == GDK_KEY_PRESS) {
     NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
-    gboolean preediting = (priv->preedit_string && *priv->preedit_string);
     gboolean handled;
 
     g_static_mutex_lock(&im_client_mutex);
     handled = [im_client filterKeyDown: nsevent];
     g_static_mutex_unlock(&im_client_mutex);
 
-    preediting = preediting || (priv->preedit_string && *priv->preedit_string);
-
-    return handled && preediting;
+    return handled;
   }
   return FALSE;
 }

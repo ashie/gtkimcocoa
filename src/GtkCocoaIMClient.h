@@ -28,6 +28,7 @@
   NSRange markedRange;
   NSRange selectedRange;
   BOOL activated;
+  BOOL handled;
 }
 
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context;
