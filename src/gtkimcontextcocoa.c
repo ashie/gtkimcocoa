@@ -119,7 +119,7 @@ gtk_im_context_cocoa_class_init (GtkIMContextCocoaClass *class)
 }
 
 static void
-set_focused_context(GtkIMContextCocoa *context_cocoa)
+set_focused_context (GtkIMContextCocoa *context_cocoa)
 {
   g_static_mutex_lock(&im_client_mutex);
 
@@ -339,7 +339,7 @@ gtk_im_context_cocoa_get_preedit_string (GtkIMContextCocoa *context)
 }
 
 GdkRectangle
-gtk_im_context_cocoa_get_cursor_location(GtkIMContextCocoa *context)
+gtk_im_context_cocoa_get_cursor_location (GtkIMContextCocoa *context)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
   GdkRectangle location = {0, 0, 0, 0};
