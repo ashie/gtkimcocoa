@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __GTK_COM_CONTEXT_COCOA_H__
-#define __GTK_COM_CONTEXT_COCOA_H__
+#ifndef __GTK_IM_CONTEXT_COCOA_H__
+#define __GTK_IM_CONTEXT_COCOA_H__
 
 #include <gtk/gtk.h>
 
@@ -62,4 +62,4 @@ GdkRectangle  gtk_im_context_cocoa_get_cursor_location
 
 G_END_DECLS
 
-#endif /* __GTK_COM_CONTEXT_COCOA_H__ */
+#endif /* __GTK_IM_CONTEXT_COCOA_H__ */

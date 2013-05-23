@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __GTK_IM_COCOA_VIEW_H__
-#define __GTK_IM_COCOA_VIEW_H__
+#ifndef __GTK_COCOA_IM_CLIENT_H__
+#define __GTK_COCOA_IM_CLIENT_H__
 
 #include <gdk/gdkquartz.h>
 #include "gtkimcontextcocoa.h"
@@ -36,4 +36,4 @@
 
 @end
 
-#endif /* __GTK_IM_COCOA_VIEW_H__ */
+#endif /* __GTK_COCOA_IM_CLIENT_H__ */
