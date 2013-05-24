@@ -150,9 +150,11 @@
 
 - (void) doCommandBySelector: (SEL)aSelector
 {
-  // Do nothing. Although we are required to implement this method, we do not
-  // handle Cocoa command IDs, and the Apple docs explcitly say not to forward
-  // unhandled commands up the NSReponder chain, which calls NSBeep().
+  /*
+   * Do nothing. Although we are required to implement this method, we do not
+   * handle Cocoa command IDs, and the Apple docs explcitly say not to forward
+   * unhandled commands up the NSReponder chain, which calls NSBeep().
+   */
 }
 
 - (void) insertText: (id)aString replacementRange:(NSRange)replacementRange
