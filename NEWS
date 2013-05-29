@@ -1,0 +1,21 @@
+Overview of Changes in GtkIMCocoa 0.0.0 to 0.0.1
+================================================
+
+* Enable to build against GTK+2
+
+* Fix a bug that previous preedit string is always appeared on some applications
+  such as Xamarin Studio.
+
+* Fix a bug that sometimes key events are sent to unfocused widgets.
+
+* Add patches against GTK+ to fix strange behavior on using some third party
+  input methods such as GoogleIME.
+
+* BTW, now I've noticed that another implementation of immodule for OS X was
+  already merge into GTK+:
+
+  https://bugzilla.gnome.org/show_bug.cgi?id=694273
+
+  But I believe that the design of it isn't good. It's agree to modify GDK layer
+  & to communicate with it using g_object_{set,get}_data() for this purpose.
+  And it still has some issues which are same with GtkIMCocoa.
