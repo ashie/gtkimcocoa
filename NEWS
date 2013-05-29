@@ -16,6 +16,6 @@ Overview of Changes in GtkIMCocoa 0.0.0 to 0.0.1
 
   https://bugzilla.gnome.org/show_bug.cgi?id=694273
 
-  But I believe that the design of it isn't good. It's agree to modify GDK layer
+  But I believe that the design of it isn't good. It's ugly to modify GDK layer
   & to communicate with it using g_object_{set,get}_data() for this purpose.
   And it still has some issues which are same with GtkIMCocoa.
