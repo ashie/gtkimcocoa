@@ -167,8 +167,7 @@
     str = [aString UTF8String];
   }
 
-  if ([self hasMarkedText])
-    [self unmarkText];
+  [self unmarkText];
 
   handled = YES;
   g_signal_emit_by_name(gtkIMContextCocoa, "commit", str);
