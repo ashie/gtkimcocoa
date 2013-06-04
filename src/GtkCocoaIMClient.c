@@ -40,7 +40,7 @@
 - (BOOL) filterKeyDown: (NSEvent *) keyDownEvent
 {
   /*
-   * Since an event whose type is "NSFlagsChanged" throw exception,
+   * Since an event whose type is "NSFlagsChanged" throws exception,
    * we ignore it.
    */
   if ([keyDownEvent type] == NSFlagsChanged)
