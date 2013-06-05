@@ -32,6 +32,12 @@ create_tree_view (void)
     return container;
 }
 
+static void
+cb_activate(void)
+{
+    g_print("activate\n");
+}
+
 static GtkWidget *
 create_window (void)
 {
@@ -51,6 +57,8 @@ create_window (void)
 
     entry = gtk_entry_new();
     gtk_box_pack_start(GTK_BOX (vbox), entry, FALSE, FALSE, 0);
+    g_signal_connect(entry, "activate",
+                     G_CALLBACK(cb_activate), NULL);
     gtk_widget_show(entry);
 
     textview = gtk_text_view_new();
