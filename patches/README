@@ -5,3 +5,8 @@
   See the following bug entry for more details:
 
   https://bugzilla.gnome.org/show_bug.cgi?id=698183
+
+* translate-JIS-Hiragana-Eisu-keys.patch
+
+  Fix broken keys in JIS keyboard.
+  See the comments in the patch for more details.
