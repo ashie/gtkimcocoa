@@ -38,6 +38,13 @@ cb_activate(void)
     g_print("activate\n");
 }
 
+static gboolean
+cb_key_release(GtkWidget *widget, GdkEventKey *key_event, gpointer data)
+{
+    g_print("keyval: %s\n", gdk_keyval_name(key_event->keyval));
+    return FALSE;
+}
+
 static GtkWidget *
 create_window (void)
 {
@@ -59,6 +66,8 @@ create_window (void)
     gtk_box_pack_start(GTK_BOX (vbox), entry, FALSE, FALSE, 0);
     g_signal_connect(entry, "activate",
                      G_CALLBACK(cb_activate), NULL);
+    g_signal_connect(entry, "key-release-event",
+                     G_CALLBACK(cb_key_release), NULL);
     gtk_widget_show(entry);
 
     textview = gtk_text_view_new();

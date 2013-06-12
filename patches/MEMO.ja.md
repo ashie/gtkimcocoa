@@ -14,9 +14,28 @@ translate-JIS-Hiragana-Eisu-keys.patchバグ報告用メモ
 
 再現方法
 --------
-TODO:
-なかなか厄介...JISキーボード送りつけないと理解してもらえないかも...
-ソフトウェアキーボードで再現させる方法が無いか探す。
+* JISキーボードが無い場合
+  * KeyRemap4MacBookをインストール
+  * 「For Japanese」の以下の2つにチェックを入れる
+    (チェック一つで両方を有効化できる設定もあるが、英語ロケールでも項目名が
+    なぜか日本語なので、日本人以外にも伝え易い以下を使用)
+  * 「Change Command_L Key」->
+    「Command_L to Command_L (+ When you type Command_L only, send EISU)」
+  * 「Change Command_R Key」->
+    「Command_R to Command_R (+ When you type Command_R only, send KANA)」
+* testbet-gtk2 or testbed-gtk3を起動する
+* エントリで「英数」キーを押す。JISキーボードが無い場合は「左コマンドキー」。
+  * 期待する結果: コンソールに「keyval: Eisu_toggle」と表示される。
+    (JISキーボードが無い場合は「Meta_L」も表示される。)
+    また、コンソールに「activate」が表示されない。
+  * 実際の結果: コンソール「keyval: space」と表示される。
+    また、コンソールに「activate」が表示される。
+* エントリで「かな」キーを押す。JISキーボードが無い場合は「右コマンドキー」。
+  * 期待する結果: コンソールに「keyval: Hiragana」と表示される
+    (JISキーボードが無い場合は「Meta_R」も表示される。)
+    また、コンソールに「activate」が表示されない。
+  * 実際の結果: コンソール「keyval: space」と表示される
+    また、コンソールに「activate」が表示される。
 
 原因
 ----
