@@ -229,7 +229,7 @@ filter_keypress (GtkIMContext *context,
   {
     handled = TRUE;
   }
-#endif
+#endif /* GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND */
 
   return handled;
 }
