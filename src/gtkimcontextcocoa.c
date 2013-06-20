@@ -255,7 +255,7 @@ create_pango_attr_list (GtkIMContextCocoaPriv *priv)
   gint last_pos = 0;
   gint selected_tail_pos = priv->cursor_pos + priv->selected_len;
 
-#define ADD_ATTR(tail_pos, type) \
+#define ADD_UNDERLINE(tail_pos, type) \
 { \
   gchar *tail = g_utf8_offset_to_pointer(priv->preedit_string, tail_pos); \
   attr = pango_attr_underline_new(type); \
@@ -272,13 +272,14 @@ create_pango_attr_list (GtkIMContextCocoaPriv *priv)
     return attrs;
 
   if (priv->cursor_pos > 0)
-    ADD_ATTR(priv->cursor_pos, PANGO_UNDERLINE_SINGLE);
+    ADD_UNDERLINE(priv->cursor_pos, PANGO_UNDERLINE_SINGLE);
   if (priv->selected_len > 0)
-    ADD_ATTR(priv->cursor_pos + priv->selected_len, PANGO_UNDERLINE_DOUBLE);
+    ADD_UNDERLINE(priv->cursor_pos + priv->selected_len,
+                  PANGO_UNDERLINE_DOUBLE);
   if (head != priv->preedit_string && selected_tail_pos)
-    ADD_ATTR(text_len, PANGO_UNDERLINE_SINGLE);
+    ADD_UNDERLINE(text_len, PANGO_UNDERLINE_SINGLE);
 
-#undef ADD_ATTR
+#undef ADD_UNDERLINE
 
   return attrs;
 }
