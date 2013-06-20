@@ -21,6 +21,10 @@
 #include <gdk/gdkquartz.h>
 #include "GtkCocoaIMClient.h"
 
+#define GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND 1
+#define GTK_IM_COCOA_JIS_HIRAGANA 0x66
+#define GTK_IM_COCOA_JIS_EISU     0x68
+
 typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
 {
@@ -201,21 +205,33 @@ filter_keypress (GtkIMContext *context,
                  GdkEventKey  *event)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
+  gboolean handled = FALSE;
 
   if (!priv->focused)
-    return FALSE;
+    return handled;
 
   if (event->type == GDK_KEY_PRESS) {
     NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
-    gboolean handled;
 
     g_static_mutex_lock(&im_client_mutex);
     handled = [im_client filterKeyDown: nsevent];
     g_static_mutex_unlock(&im_client_mutex);
-
-    return handled;
   }
-  return FALSE;
+
+#ifdef GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND
+  /*
+   * GdkQuartz (gtk+-3.8.2) translates these keys to GDK_space unexpectedly.
+   * Although we should fix it at GdkQuartz layer, we also handle these keys
+   * at this layer to work with old version of GTK+.
+   */
+  if (event->hardware_keycode == GTK_IM_COCOA_JIS_HIRAGANA ||
+      event->hardware_keycode == GTK_IM_COCOA_JIS_EISU)
+  {
+    handled = TRUE;
+  }
+#endif
+
+  return handled;
 }
 
 static void
