@@ -35,16 +35,6 @@
 - (void) setGtkIMContextCocoa: (GtkIMContextCocoa *) context
 {
   gtkIMContextCocoa = context;
-}
-
-- (BOOL) filterKeyDown: (NSEvent *) keyDownEvent
-{
-  /*
-   * Since an event whose type is "NSFlagsChanged" throws exception,
-   * we ignore it.
-   */
-  if ([keyDownEvent type] == NSFlagsChanged)
-    return NO;
 
   /*
    * Although Apple's reference manual says "You should not call this method
@@ -55,6 +45,16 @@
     [[self inputContext] activate];
     activated = YES;
   }
+}
+
+- (BOOL) filterKeyDown: (NSEvent *) keyDownEvent
+{
+  /*
+   * Since an event whose type is "NSFlagsChanged" throws exception,
+   * we ignore it.
+   */
+  if ([keyDownEvent type] == NSFlagsChanged)
+    return NO;
 
   handled = NO;
   [self interpretKeyEvents:[NSArray arrayWithObject:keyDownEvent]];
