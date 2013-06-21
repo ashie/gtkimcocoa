@@ -1,6 +1,6 @@
-From a5353fc0eb3f7e8c7c644c532efd15b152a5a07b Mon Sep 17 00:00:00 2001
+From b93535cc5d60149edc3a45d5b7f31f62a80234bf Mon Sep 17 00:00:00 2001
 From: Takuro Ashie <ashie@clear-code.com>
-Date: Wed, 5 Jun 2013 18:00:30 +0900
+Date: Fri, 21 Jun 2013 21:29:14 +0900
 Subject: [PATCH] Quartz: translate JIS Hiragana & Eisu keys.
 
 Since UCKeyTranslate() converts these keys to Space key unexpectedly,
@@ -12,7 +12,7 @@ keys & keypad keys.
  1 file changed, 31 insertions(+)
 
 diff --git a/gdk/quartz/gdkkeys-quartz.c b/gdk/quartz/gdkkeys-quartz.c
-index a4df2cf..9bef229 100644
+index a4df2cf..fb11c33 100644
 --- a/gdk/quartz/gdkkeys-quartz.c
 +++ b/gdk/quartz/gdkkeys-quartz.c
 @@ -191,6 +191,29 @@ const static struct {
@@ -38,8 +38,8 @@ index a4df2cf..9bef229 100644
 +   * and there is no suitable ucs value for them to add to special_ucs_table.
 +   * So we should translate them particularly.
 +   */
-+  { 0x66 /* 102 */, GDK_KEY_Hiragana },
-+  { 0x68 /* 104 */, GDK_KEY_Eisu_toggle }
++  { 0x66 /* 102 */, GDK_KEY_Eisu_toggle },
++  { 0x68 /* 104 */, GDK_KEY_Hiragana }
 +};
 +
  /* These values aren't covered by gdk_unicode_to_keyval */

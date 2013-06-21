@@ -22,8 +22,8 @@
 #include "GtkCocoaIMClient.h"
 
 #define GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND 1
-#define GTK_IM_COCOA_JIS_HIRAGANA 0x66
-#define GTK_IM_COCOA_JIS_EISU     0x68
+#define GTK_IM_COCOA_JIS_EISU     0x66
+#define GTK_IM_COCOA_JIS_HIRAGANA 0x68
 
 typedef struct _GtkIMContextCocoaPriv GtkIMContextCocoaPriv;
 struct _GtkIMContextCocoaPriv
