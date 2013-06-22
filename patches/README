@@ -1,12 +1,12 @@
+* translate-JIS-Hiragana-Eisu-keys.patch
+
+  Fix broken "Eisu" and "Kana" keys on JIS keyboard:
+  https://bugzilla.gnome.org/show_bug.cgi?id=702841
+
 * gtk+-2.24.17-gdk-quartz-observe-input-sources.patch
   gtk+-3.6.4-gdk-quartz-observe-input-sources.patch
 
-  Fix broken behavior on enabling some input sources.
-  See the following bug entry for more details:
-
+  Fix broken behavior on enabling some input sources:
   https://bugzilla.gnome.org/show_bug.cgi?id=698183
 
-* translate-JIS-Hiragana-Eisu-keys.patch
-
-  Fix broken keys in JIS keyboard.
-  See the comments in the patch for more details.
+  These patches are already merged to upstream.
