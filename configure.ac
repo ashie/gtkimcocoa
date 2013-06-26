@@ -88,6 +88,22 @@ dnl Checks for library functions.
 dnl
 
 
+dnl
+dnl Options to enable some features
+dnl
+AC_ARG_ENABLE([workaround],
+              AS_HELP_STRING([--enable-workaround],
+                             [Enable some workaround code]),
+              enable_workaround=$enableval,
+              enable_workaround=no)
+AC_MSG_RESULT([$enable_workaround])
+
+if test "$enable_workaround" = "yes"; then
+  AC_DEFINE(GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND, 1,
+            [Define to 1 if you enable workaround for JIS keyboard])
+fi
+
+
 AC_CONFIG_FILES([
 Makefile
 src/Makefile

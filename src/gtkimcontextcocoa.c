@@ -17,11 +17,14 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "gtkimcontextcocoa.h"
 #include <gdk/gdkquartz.h>
 #include "GtkCocoaIMClient.h"
 
-#define GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND 1
 #define GTK_IM_COCOA_JIS_EISU     0x66
 #define GTK_IM_COCOA_JIS_HIRAGANA 0x68
 
