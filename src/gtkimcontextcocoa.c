@@ -284,6 +284,18 @@ create_pango_attr_list (GtkIMContextCocoaPriv *priv)
 
 #undef ADD_UNDERLINE
 
+#ifdef GTK_IM_COCOA_ENABLE_COLOR_WORKAROUND
+  attr = pango_attr_background_new(0xffff, 0xffff, 0xffff);
+  attr->start_index = 0;
+  attr->end_index = last_pos;
+  pango_attr_list_change(attrs, attr);
+
+  attr = pango_attr_foreground_new(0, 0, 0);
+  attr->start_index = 0;
+  attr->end_index = last_pos;
+  pango_attr_list_change(attrs, attr);
+#endif /* GTK_IM_COCOA_ENABLE_COLOR_WORKAROUND */
+
   return attrs;
 }
 

@@ -101,6 +101,8 @@ AC_MSG_RESULT([$enable_workaround])
 if test "$enable_workaround" = "yes"; then
   AC_DEFINE(GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND, 1,
             [Define to 1 if you enable workaround for JIS keyboard])
+  AC_DEFINE(GTK_IM_COCOA_ENABLE_COLOR_WORKAROUND, 1,
+            [Define to 1 if you enable workaround for color of preedit string])
 fi
 
 
