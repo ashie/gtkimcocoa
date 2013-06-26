@@ -8,4 +8,8 @@ if test -z $GTK_PATH; then
   exit 1
 fi
 
-./configure --enable-workaround PATH="$GTK_PATH/bin:$PATH" PKG_CONFIG_PATH="$GTK_PATH/lib/pkgconfig" CFLAGS="-arch i386" LDFLAGS="-arch i386"
+./configure --enable-workaround \
+  PATH="$GTK_PATH/bin:$PATH" \
+  PKG_CONFIG_PATH="$GTK_PATH/lib/pkgconfig" \
+  CFLAGS="-arch i386" \
+  LDFLAGS="-arch i386"
