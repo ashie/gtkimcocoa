@@ -4,7 +4,7 @@
 dnl Process this file with autoconf to produce a configure script.
 m4_define([gtkimcocoa_major_version], [0])
 m4_define([gtkimcocoa_minor_version], [0])
-m4_define([gtkimcocoa_micro_version], [1])
+m4_define([gtkimcocoa_micro_version], [2])
 m4_define([gtkimcocoa_version],
     gtkimcocoa_major_version.gtkimcocoa_minor_version.gtkimcocoa_micro_version)
 
