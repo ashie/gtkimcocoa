@@ -111,6 +111,7 @@ Makefile
 src/Makefile
 gtk2/Makefile
 test/Makefile
+patches/Makefile
 ])
 
 AC_OUTPUT
