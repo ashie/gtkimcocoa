@@ -1,14 +1,5 @@
-* Fix strange behavior on pressing "Kana" and "Eisu" keys.
-  -> One of cause of this issue is GDK's keymap. Currently the key values of
-     them in GDK world are same with "Space" key.
-* Fix the issue that preedit string isn't displayed on Xamarin Studio.
-  -> It seems Xamarin Studio's issue. When I set foreground & background
-     attributes to preedit string, it shows the preedit string correctly.
-     It should show it without these attributes.
 * Fix cursor location (especially on multi display environment).
 * Sometimes the position of a double underline for a preedit string seems wrong
   (unconfirmed).
 * Implement "reset" feature.
-* Implement "focus_in" and "focus_out".
 * Implement "set_use_preedit".
-* Hook toplevel window's key event.
