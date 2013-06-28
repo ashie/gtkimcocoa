@@ -1,3 +1,21 @@
+Overview of Changes in GtkIMCocoa 0.0.1 to 0.0.2
+================================================
+
+* Stop beeping on every key press (pull request from Michael Hutchinson)
+
+* Add a workaround for Eisu & Kana keys on JIS keyboard.
+  This workaround is disabled by default. To enable it, please add a configure
+  option "--enable-workaround" on building it.
+
+* Add a workaround to set color of preedit string to work with Xamarin Studio.
+  This workaround is disabled by default. To enable it, please add a configure
+  option "--enable-workaround" on building it.
+
+* Fix a bug that cannot input characters via characters pad on initial state.
+
+* Add a patch against GTK+ to add keymaps for Eisu & Kana keys.
+
+
 Overview of Changes in GtkIMCocoa 0.0.0 to 0.0.1
 ================================================
 
