@@ -112,6 +112,7 @@ src/Makefile
 gtk2/Makefile
 test/Makefile
 patches/Makefile
+tools/Makefile
 ])
 
 AC_OUTPUT
