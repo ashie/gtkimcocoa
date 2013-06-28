@@ -1,8 +1,14 @@
-gtkimcocoa
+GtkIMCocoa
 ==========
 
-How to build
+What's this?
 ------------
+
+GtkIMCocoa is yet another input method module for GTK+ on Mac OS X.
+
+
+How to build from source code
+-----------------------------
 
 ### Build GTK+3 using jhbuild
 
