@@ -1,11 +1,14 @@
 #!/bin/sh
 
 MONO_PATH="/Library/Frameworks/Mono.framework"
-GTK_PATH=`ls -d ${MONO_PATH}/Versions/2.10.* | sort -r | head -1`
+GTK_PATH="${MONO_PATH}/Versions/Current"
 
-if test -z $GTK_PATH; then
-  echo "You don't have proper GTK+ in ${MONO_PATH}"
-  exit 1
+if test "!" -d ${GTK_PATH}; then
+  GTK_PATH=`ls -d ${MONO_PATH}/Versions/2.10.* | sort -r | head -1`
+  if test -z "${GTK_PATH}"; then
+    echo "You don't have proper GTK+ in ${MONO_PATH}"
+    exit 1
+  fi
 fi
 
 ./configure --enable-workaround \
