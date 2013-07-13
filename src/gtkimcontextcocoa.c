@@ -22,7 +22,6 @@
 #endif
 
 #include "gtkimcontextcocoa.h"
-#include <gdk/gdkquartz.h>
 #include "GtkCocoaIMClient.h"
 
 #define GTK_IM_COCOA_JIS_EISU     0x66
