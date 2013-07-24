@@ -19,7 +19,7 @@ more details.
 
 2. Download gtk-osx-build-setup.sh
 
-   $ curl -s https://git.gnome.org/browse/gtk-osx/plain/gtk-osx-build-setup.sh -o gtk-osx-build-setup.sh
+   $ curl -O https://git.gnome.org/browse/gtk-osx/plain/gtk-osx-build-setup.sh
 
 3. Run gtk-osx-build-setup.sh
 
