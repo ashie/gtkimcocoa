@@ -215,9 +215,11 @@ filter_keypress (GtkIMContext *context,
   if (event->type == GDK_KEY_PRESS) {
     NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
 
-    g_static_mutex_lock(&im_client_mutex);
-    handled = [im_client filterKeyDown: nsevent];
-    g_static_mutex_unlock(&im_client_mutex);
+    if (nsevent) {
+      g_static_mutex_lock(&im_client_mutex);
+      handled = [im_client filterKeyDown: nsevent];
+      g_static_mutex_unlock(&im_client_mutex);
+    }
   }
 
 #ifdef GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND
