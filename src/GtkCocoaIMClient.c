@@ -71,19 +71,42 @@
   return 0;
 }
 
+/*
+ * Because _gdk_quartz_window_gdk_xy_to_xy() cannot be used from external
+ * program, we do same calculation here.
+ */
+static void
+gdk_rect_to_ns_rect(GdkRectangle *rect)
+{
+  NSArray *array = [NSScreen screens];
+  gint min_x = 0, min_y = 0, max_x = 0, max_y = 0, height, i;
+
+  for (i = 0; i < [array count]; i++)
+  {
+      NSRect screen_rect = [[array objectAtIndex:i] frame];
+      min_x = MIN (min_x, screen_rect.origin.x);
+      max_x = MAX (max_x, screen_rect.origin.x);
+      min_y = MIN (min_y, screen_rect.origin.y);
+      max_y = MAX (max_y, screen_rect.origin.y + screen_rect.size.height);
+  }
+
+  height = max_y - min_y;
+
+  rect->x = rect->x + min_x;
+  rect->y = height - (rect->y + rect->height) + min_y;
+}
+
 - (NSRect) firstRectForCharacterRange:
   (NSRange)aRange
   actualRange:(NSRangePointer)actualRange
 {
   GdkRectangle location;
-  NSRect rect;
 
   location = gtk_im_context_cocoa_get_cursor_location(gtkIMContextCocoa);
-  location.y = gdk_screen_height() - location.y - location.height;
-  rect = NSMakeRect(location.x, location.y,
-                    location.width, location.height);
+  gdk_rect_to_ns_rect(&location);
 
-  return rect;
+  return NSMakeRect(location.x, location.y,
+                    location.width, location.height);
 }
 
 - (NSArray *) validAttributesForMarkedText
