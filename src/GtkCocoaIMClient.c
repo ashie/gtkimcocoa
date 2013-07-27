@@ -78,11 +78,11 @@
 static void
 gdk_rect_to_ns_rect(GdkRectangle *rect)
 {
-  NSArray *array = [NSScreen screens];
+  NSArray *screens = [NSScreen screens];
   gint min_x = 0, min_y = 0, max_x = 0, max_y = 0, height, i;
 
-  for (i = 0; i < [array count]; i++) {
-    NSRect screen_rect = [[array objectAtIndex:i] frame];
+  for (i = 0; i < [screens count]; i++) {
+    NSRect screen_rect = [[screens objectAtIndex:i] frame];
     min_x = MIN (min_x, screen_rect.origin.x);
     max_x = MAX (max_x, screen_rect.origin.x);
     min_y = MIN (min_y, screen_rect.origin.y);
