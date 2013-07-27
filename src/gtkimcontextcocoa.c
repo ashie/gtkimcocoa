@@ -36,6 +36,7 @@ struct _GtkIMContextCocoaPriv
   gint cursor_pos;
   gint selected_len;
   gboolean focused;
+  GtkIMContext *fallback;
 };
 
 GtkCocoaIMClient *im_client = NULL;
@@ -139,6 +140,13 @@ set_focused_context (GtkIMContextCocoa *context_cocoa)
 }
 
 static void
+fallback_im_commit_cb (GtkIMContext *context, const gchar *string,
+                       GtkIMContextCocoa *context_cocoa)
+{
+  g_signal_emit_by_name (context_cocoa, "commit", string);
+}
+
+static void
 gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context_cocoa);
@@ -148,12 +156,23 @@ gtk_im_context_cocoa_init (GtkIMContextCocoa *context_cocoa)
   priv->cursor_pos = 0;
   priv->selected_len = 0;
   priv->focused = FALSE;
+  priv->fallback = gtk_im_context_simple_new();
+  g_signal_connect (priv->fallback, "commit",
+                    G_CALLBACK (fallback_im_commit_cb), context_cocoa);
 }
 
 static void
 dispose (GObject *obj)
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(obj);
+
+  if (priv->fallback) {
+    g_signal_handlers_disconnect_by_func (priv->fallback,
+                                          G_CALLBACK (fallback_im_commit_cb),
+                                          obj);
+    g_object_unref (priv->fallback);
+    priv->fallback = NULL;
+  }
 
   if (priv->preedit_string) {
     g_free(priv->preedit_string);
@@ -208,18 +227,18 @@ filter_keypress (GtkIMContext *context,
 {
   GtkIMContextCocoaPriv *priv = GET_PRIVATE(context);
   gboolean handled = FALSE;
+  NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
 
   if (!priv->focused)
     return handled;
 
-  if (event->type == GDK_KEY_PRESS) {
-    NSEvent *nsevent = gdk_quartz_event_get_nsevent((GdkEvent*)event);
+  if (!nsevent)
+    return gtk_im_context_filter_keypress (priv->fallback, event);
 
-    if (nsevent) {
+  if (event->type == GDK_KEY_PRESS) {
       g_static_mutex_lock(&im_client_mutex);
       handled = [im_client filterKeyDown: nsevent];
       g_static_mutex_unlock(&im_client_mutex);
-    }
   }
 
 #ifdef GTK_IM_COCOA_ENABLE_JIS_KEYBOARD_WORKAROUND
